@@ -9,5 +9,4 @@ global using GameWebApi2.ViewModels;
 global using AutoMapper;
 global using Microsoft.AspNetCore.Http;
 global using GameWebApi2.DTO;
-global using GameWebApi2.Authentication;
 

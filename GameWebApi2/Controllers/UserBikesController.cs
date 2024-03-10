@@ -1,6 +1,4 @@
-﻿using GameWebApi2.Authentication;
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

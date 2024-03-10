@@ -1,4 +1,4 @@
-﻿using GameWebApi2.Authentication;
+﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

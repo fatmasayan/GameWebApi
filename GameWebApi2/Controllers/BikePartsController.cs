@@ -1,12 +1,10 @@
-﻿using GameWebApi2.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
 
 namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class BikePartsController : ControllerBase
 {
     private readonly IBikePartsRepository _bikePartsRepository;
