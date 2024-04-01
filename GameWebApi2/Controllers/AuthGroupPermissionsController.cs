@@ -1,12 +1,8 @@
-﻿
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class AuthGroupPermissionsController : ControllerBase
 {
     private readonly IAuthGroupPermissionsRepository _authGroupPermissionsRepository;
@@ -18,7 +14,7 @@ public class AuthGroupPermissionsController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _authGroupPermissionsRepository.GetAll(x => x.group, x => x.permission);
@@ -33,7 +29,7 @@ public class AuthGroupPermissionsController : ControllerBase
         return Ok(_authGroupPermissionsRepository.Get(x => x.id == id, x => x.group, x => x.permission));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(AuthGroupPermissionsAddDTO model)
     {
         if (model == null)
@@ -45,7 +41,7 @@ public class AuthGroupPermissionsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(AuthGroupPermissionsUpdateDTO model)
     {
         if (model == null)
@@ -57,7 +53,7 @@ public class AuthGroupPermissionsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _authGroupPermissionsRepository.Delete(x => x.id == id);

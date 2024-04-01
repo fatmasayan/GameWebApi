@@ -9,7 +9,7 @@ public class UserInventoryProfile : Profile
 
     private void CreateMaps()
     {
-        CreateMap<UserInventory, UserProfileViewModel>();
+        CreateMap<UserInventory, UserInventoryViewModel>();
 
         CreateMap<UserInventoryDTO, UserInventory>();
 

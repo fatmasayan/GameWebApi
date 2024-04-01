@@ -1,12 +1,8 @@
-﻿
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class DjangoContentTypeController : ControllerBase
 {
     private readonly IDjangoContentTypeRepository _djangoContentTypeRepository;
@@ -18,7 +14,7 @@ public class DjangoContentTypeController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getListe")]
     public IActionResult GetAll()
     {
         var resultList = _djangoContentTypeRepository.GetAll();
@@ -32,7 +28,7 @@ public class DjangoContentTypeController : ControllerBase
         return Ok(_djangoContentTypeRepository.Get(x => x.id == id));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(DjangoContentTypeAddDTO model)
     {
         if (model == null)
@@ -44,7 +40,7 @@ public class DjangoContentTypeController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(DjangoContentTypeUpdateDTO model)
     {
         if (model == null)
@@ -56,7 +52,7 @@ public class DjangoContentTypeController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _djangoContentTypeRepository.Delete(x => x.id == id);

@@ -1,11 +1,8 @@
-﻿
-using GameWebApi2.DTO;
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 
 public class MapController : ControllerBase
 {
@@ -18,7 +15,7 @@ public class MapController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _mapRepository.GetAll();
@@ -32,7 +29,7 @@ public class MapController : ControllerBase
         return Ok(_mapRepository.Get(x => x.id == id));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(MapAddDTO model)
     {
         if (model == null)
@@ -44,7 +41,7 @@ public class MapController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(MapUpdateDTO model)
     {
         if (model == null)
@@ -56,7 +53,7 @@ public class MapController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _mapRepository.Delete(x => x.id == id);

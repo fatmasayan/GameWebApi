@@ -1,12 +1,8 @@
-﻿
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class PurchaseController : ControllerBase
 {
     private readonly IPurchaseRepository _purchaseRepository;
@@ -18,7 +14,7 @@ public class PurchaseController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _purchaseRepository.GetAll(includes: x => x.loginUser);
@@ -32,7 +28,7 @@ public class PurchaseController : ControllerBase
         return Ok(_purchaseRepository.Get(x => x.id == id, includes: x => x.loginUser));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(PurchaseAddDTO model)
     {
         if (model == null)
@@ -44,7 +40,7 @@ public class PurchaseController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(PurchaseUpdateDTO model)
     {
         if (model == null)
@@ -56,7 +52,7 @@ public class PurchaseController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _purchaseRepository.Delete(x => x.id == id);

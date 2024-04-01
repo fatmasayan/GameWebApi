@@ -2,7 +2,7 @@
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class UserProfileController : ControllerBase
 {
     private readonly IUserProfileRepository _userProfileRepository;
@@ -15,7 +15,7 @@ public class UserProfileController : ControllerBase
     }
 
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _userProfileRepository.GetAll(includes: x => x.user);
@@ -24,11 +24,11 @@ public class UserProfileController : ControllerBase
     }
 
     
-    [HttpGet("{keyword}")] 
-    public IActionResult GetAll(string keyword)
-    {
-        return Ok(_userProfileRepository.GetAll(x => x.nickName.Contains(keyword), includes: x => x.user));
-    }
+    //[HttpGet("getKeyword/{keyword}")] 
+    //public IActionResult GetAll(string keyword)
+    //{
+    //    return Ok(_userProfileRepository.GetAll(x => x.nickName.Contains(keyword), includes: x => x.user));
+    //}
 
     
     [HttpGet("getSingle/{id}")]
@@ -37,7 +37,7 @@ public class UserProfileController : ControllerBase
         return Ok(_userProfileRepository.Get(x => x.id == id , includes: x => x.user));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(UserProfileAddDTO model) 
     {
         if (model == null)
@@ -50,7 +50,7 @@ public class UserProfileController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(UserProfileUpdateDTO model) 
     {                                                       
         if (model == null)
@@ -62,7 +62,7 @@ public class UserProfileController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _userProfileRepository.Delete(x => x.id == id);

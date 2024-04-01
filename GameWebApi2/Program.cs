@@ -1,9 +1,4 @@
-﻿using GameWebApi2;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-
+﻿
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,10 +9,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
-builder.Services.AddAutoMapper(typeof(Program)); //AutoMapper'a programımızı tanıtma 
+builder.Services.AddAutoMapper(typeof(Program)); //AutoMapper'a GameWebApi programına tanıtma
 
 builder.Services
-    // oluşturlan interfaceleri ve model classlarını tanıtma işlemi yapılmalı IoC Container'a tanıtmış olduk. IAuthGroupRepository için AuthGroupRepository bu nesneyi bize verecek.
+    // oluşturulan interfaceleri ve model classlarını tanıtma işlemi yapılmalı IoC Container'a tanıtmış olduk. IAuthGroupRepository için AuthGroupRepository bu nesneyi bize verecek.
     .AddScoped<IAchievementRepository, AchievementRepository>() // dependencies injections DI 
     .AddScoped<IAuthGroupRepository, AuthGroupRepository>()
     .AddScoped<IAuthGroupPermissionsRepository, AuthGroupPermissionsRepository>()
@@ -47,14 +42,14 @@ builder.Services
 
 
 
-//// baglantı oluşturma
+//// veritabanıyla baglantı oluşturma 
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 ///
 
 
-
+//Token ve authentication işlemleri için gerekli tanımlam ve atamalar
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -69,8 +64,10 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Secret"])),
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidateLifetime = false,
-        ValidateIssuerSigningKey = true
+        ValidateLifetime = true, //tokenen süresini doğrulayacak olan işlem
+        ValidateIssuerSigningKey = true,
+        ClockSkew = TimeSpan.Zero, //zaman farkını olmasının engellemek için
+        //LifetimeValidator = () => true;
     };
 });
 
@@ -79,7 +76,7 @@ builder.Services.AddAuthorization();
 //
 
 
-var app = builder.Build();  
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

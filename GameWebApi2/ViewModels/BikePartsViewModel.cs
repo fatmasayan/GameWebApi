@@ -1,9 +1,8 @@
-﻿namespace GameWebApi2.ViewModels
+﻿namespace GameWebApi2.ViewModels;
+
+public class BikePartsViewModel
 {
-    public class BikePartsViewModel
-    {
-        //public int id { get; set; }
-        public string partType { get; set; }
-        public string partName { get; set; }
-    }
+    //public int id { get; set; }
+    public string partType { get; set; }
+    public string partName { get; set; }
 }

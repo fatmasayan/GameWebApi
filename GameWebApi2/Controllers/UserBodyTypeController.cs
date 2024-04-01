@@ -2,6 +2,7 @@
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class UserBodyTypeController : ControllerBase
 {
     private readonly IUserBodyTypeRepository _userBodyTypeRepository;
@@ -13,7 +14,7 @@ public class UserBodyTypeController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _userBodyTypeRepository.GetAll(includes:x => x.loginUser);
@@ -27,7 +28,7 @@ public class UserBodyTypeController : ControllerBase
         return Ok(_userBodyTypeRepository.Get(x => x.id == id, includes: x => x.loginUser));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(UserBodyTypeAddDTO model)
     {
         if (model == null)
@@ -39,9 +40,8 @@ public class UserBodyTypeController : ControllerBase
         return Ok(result);
     }
 
-    // NERDE YAPMAYA ÇALIŞTOĞIN YER 
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(UserBodyTypeUpdateDTO model)
     {
         if (model == null)
@@ -53,7 +53,7 @@ public class UserBodyTypeController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _userBodyTypeRepository.Delete(x => x.id == id);

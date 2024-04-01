@@ -2,7 +2,7 @@
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class UserInventoryController : ControllerBase
 {
     private readonly IUserInventoryRepository _userInventoryRepository;
@@ -14,7 +14,7 @@ public class UserInventoryController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _userInventoryRepository.GetAll(includes: x => x.loginUser);
@@ -28,7 +28,7 @@ public class UserInventoryController : ControllerBase
         return Ok(_userInventoryRepository.Get(x => x.id == id, includes: x => x.loginUser));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(UserInventoryAddDTO model)
     {
         if (model == null)
@@ -40,7 +40,7 @@ public class UserInventoryController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(UserInventoryUpdateDTO model)
     {
         if (model == null)
@@ -52,7 +52,7 @@ public class UserInventoryController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _userInventoryRepository.Delete(x => x.id == id);

@@ -1,11 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace GameWebApi2.DTO;
 
-namespace GameWebApi2.DTO
+public class AuthtokenTokenAddDTO
 {
-    public class AuthtokenTokenAddDTO
-    {
-        public DateTime created { get; set; }
-        public int user_id { get; set; }
+    public DateTime created { get; set; }
+    public int user_id { get; set; }
 
-    }
 }

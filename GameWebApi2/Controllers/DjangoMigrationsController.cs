@@ -1,13 +1,8 @@
-﻿
-using GameWebApi2.DTO;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class DjangoMigrationsController : ControllerBase
 {
     private readonly IDjangoMigrationsRepository _djangoMigrationsRepository;
@@ -19,7 +14,7 @@ public class DjangoMigrationsController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _djangoMigrationsRepository.GetAll();
@@ -33,7 +28,7 @@ public class DjangoMigrationsController : ControllerBase
         return Ok(_djangoMigrationsRepository.Get(x => x.id == id));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(DjangoMigrationsAddDTO model)
     {
         if (model == null)
@@ -45,7 +40,7 @@ public class DjangoMigrationsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(DjangoMigrationsUpdateDTO model)
     {
         if (model == null)
@@ -57,7 +52,7 @@ public class DjangoMigrationsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _djangoMigrationsRepository.Delete(x => x.id == id);

@@ -1,12 +1,8 @@
-﻿
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class DjangoSessionController : ControllerBase
 {
     private readonly IDjangoSessionRepository _djangoSessionRepository;
@@ -18,7 +14,7 @@ public class DjangoSessionController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _djangoSessionRepository.GetAll();
@@ -28,7 +24,7 @@ public class DjangoSessionController : ControllerBase
 
     
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(DjangoSessionUpdateDTO model)
     {
         if (model == null)
@@ -40,7 +36,7 @@ public class DjangoSessionController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(DjangoSessionUpdateDTO model)
     {
         if (model == null)
@@ -52,7 +48,7 @@ public class DjangoSessionController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{session_key}")]
+    [HttpDelete("delete/{session_key}")]
     public IActionResult Delete(string session_key)
     {
         var result = _djangoSessionRepository.Delete(x => x.session_key == session_key);

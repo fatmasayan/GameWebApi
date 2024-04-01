@@ -1,10 +1,8 @@
-﻿
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class AuthPermissionController : ControllerBase
 {
     private readonly IAuthPermissionRepository _authPermissionRepository;
@@ -16,7 +14,7 @@ public class AuthPermissionController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _authPermissionRepository.GetAll();
@@ -30,7 +28,7 @@ public class AuthPermissionController : ControllerBase
         return Ok(_authPermissionRepository.Get(x => x.id == id));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(AuthPermissionAddDTO model)
     {
         if (model == null)
@@ -42,7 +40,7 @@ public class AuthPermissionController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(AuthPermissionUpdateDTO model)
     {
         if (model == null)
@@ -54,7 +52,7 @@ public class AuthPermissionController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _authPermissionRepository.Delete(x => x.id == id);

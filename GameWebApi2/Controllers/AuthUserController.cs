@@ -1,10 +1,8 @@
-﻿
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class AuthUserController : ControllerBase
 {
     private readonly IAuthUserRepository _authUserRepository;
@@ -16,7 +14,7 @@ public class AuthUserController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _authUserRepository.GetAll();
@@ -25,11 +23,11 @@ public class AuthUserController : ControllerBase
     }
 
     
-    [HttpGet("{keyword}")] 
-    public IActionResult GetAll(string keyword)
-    {
-        return Ok(_authUserRepository.GetAll(x => x.username.Contains(keyword)));
-    }
+    //[HttpGet("getKeyword/{keyword}")] 
+    //public IActionResult GetAll(string keyword)
+    //{
+    //    return Ok(_authUserRepository.GetAll(x => x.username.Contains(keyword)));
+    //}
 
     // filterlı listeleme oldu 
     [HttpGet("getSingle/{id}")]
@@ -38,7 +36,7 @@ public class AuthUserController : ControllerBase
         return Ok(_authUserRepository.Get(x => x.id == id)); 
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(AuthUserAddDTO model)
     {
         if (model == null)
@@ -50,7 +48,7 @@ public class AuthUserController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(AuthUserUpdateDTO model)  
     {                                                      
         if (model == null)
@@ -62,7 +60,7 @@ public class AuthUserController : ControllerBase
         return Ok(result);
     }
     
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _authUserRepository.Delete(x => x.id == id);  //id göre silme işlemi yapılır

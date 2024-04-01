@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class DjangoAdminLogController : ControllerBase
 {
     private readonly IDjangoAdminLogRepository _djangoAdminLogRepository;
@@ -16,7 +14,7 @@ public class DjangoAdminLogController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _djangoAdminLogRepository.GetAll(x => x.content_type, x => x.user);
@@ -30,7 +28,7 @@ public class DjangoAdminLogController : ControllerBase
         return Ok(_djangoAdminLogRepository.Get(x => x.id == id, x => x.content_type, x => x.user));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(DjangoAdminLogAddDTO model)
     {
         if (model == null)
@@ -42,7 +40,7 @@ public class DjangoAdminLogController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update( DjangoAdminLogUpdateDTO model)
     {
         if (model == null)
@@ -54,7 +52,7 @@ public class DjangoAdminLogController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _djangoAdminLogRepository.Delete(x => x.id == id);

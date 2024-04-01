@@ -1,7 +1,6 @@
-﻿namespace GameWebApi2.ViewModels
+﻿namespace GameWebApi2.ViewModels;
+
+public class AuthGroupViewModel
 {
-    public class AuthGroupViewModel
-    {
-        public string name { get; set; }
-    }
+    public string name { get; set; }
 }

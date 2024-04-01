@@ -2,7 +2,7 @@
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class UserOwendGarageController : ControllerBase
 {
     private readonly IUserOwendGarageRepository _userOwendGarageRepository;
@@ -14,7 +14,7 @@ public class UserOwendGarageController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _userOwendGarageRepository.GetAll(x => x.garage, x => x.loginUser);
@@ -28,7 +28,7 @@ public class UserOwendGarageController : ControllerBase
         return Ok(_userOwendGarageRepository.Get(x => x.id == id, x => x.garage, x => x.loginUser));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(UserOwendGarageAddDTO model)
     {
         if (model == null)
@@ -40,7 +40,7 @@ public class UserOwendGarageController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(UserOwendGarageUpdateDTO model)
     {
         if (model == null)
@@ -52,7 +52,7 @@ public class UserOwendGarageController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _userOwendGarageRepository.Delete(x => x.id == id);

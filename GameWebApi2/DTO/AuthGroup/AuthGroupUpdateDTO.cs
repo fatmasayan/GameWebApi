@@ -1,8 +1,7 @@
-﻿namespace GameWebApi2.DTO
+﻿namespace GameWebApi2.DTO;
+
+public class AuthGroupUpdateDTO
 {
-    public class AuthGroupUpdateDTO
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-    }
+    public int id { get; set; }
+    public string name { get; set; }
 }

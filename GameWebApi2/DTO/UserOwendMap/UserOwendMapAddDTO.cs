@@ -1,5 +1,4 @@
-﻿
-namespace GameWebApi2.DTO;
+﻿namespace GameWebApi2.DTO;
 
 public class UserOwendMapAddDTO
 {

@@ -2,7 +2,7 @@
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class UserBikesController : ControllerBase
 {
     private readonly IUserBikesRepository _userBikesRepository;
@@ -14,11 +14,11 @@ public class UserBikesController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _userBikesRepository.GetAll(x => x.body, x => x.saddle, x => x.handlebar, x => x.indicator, x => x.loginUser, x => x.wheel);
-        // modele ilişkili verileri dahil etmiş oldum 
+        // modele ilişkili verileri dahil etmiş oldum , yani başka tablodan aldığı değerleri getirmiş ve o değere atadık 
         return Ok(_mapper.Map<List<UserBikesViewModel>>(resultList));
     }
 
@@ -28,7 +28,7 @@ public class UserBikesController : ControllerBase
         return Ok(_userBikesRepository.Get(x => x.id == id, x => x.body, x => x.saddle, x => x.handlebar, x => x.indicator, x => x.loginUser, x => x.wheel));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(UserBikesAddDTO model)
     {
         if (model == null)
@@ -40,7 +40,7 @@ public class UserBikesController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(UserBikesUpdateDTO model)
     {
         if (model == null)
@@ -52,7 +52,7 @@ public class UserBikesController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _userBikesRepository.Delete(x => x.id == id);

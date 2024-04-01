@@ -1,6 +1,4 @@
-﻿using GameWebApi2.DTO;
-
-namespace GameWebApi2.Mapping;
+﻿namespace GameWebApi2.Mapping;
 
 public class AuthPermissionProfile :Profile
 {

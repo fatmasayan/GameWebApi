@@ -2,7 +2,7 @@
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class UserOwnedAchievementController : ControllerBase
 {
     private readonly IUserOwnedAchievementRepository _userOwnedAchievementRepository;
@@ -14,7 +14,7 @@ public class UserOwnedAchievementController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _userOwnedAchievementRepository.GetAll( x => x.achievement_id, x => x.loginUser_id);
@@ -31,7 +31,7 @@ public class UserOwnedAchievementController : ControllerBase
         return Ok(_userOwnedAchievementRepository.Get(x => x.id == id, x => x.achievement_id, x => x.loginUser_id));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(UserOwnedAchievementAddDTO model) 
     {
         if (model == null)
@@ -43,7 +43,7 @@ public class UserOwnedAchievementController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(UserOwnedAchievementUpdateDTO model) 
     {                                                      
         if (model == null)
@@ -55,7 +55,7 @@ public class UserOwnedAchievementController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _userOwnedAchievementRepository.Delete(x => x.id == id);

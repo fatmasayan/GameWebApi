@@ -1,21 +1,21 @@
-﻿namespace GameWebApi2.Mapping
+﻿namespace GameWebApi2.Mapping;
+
+public class AchievementProfile :Profile
 {
-    public class AchievementProfile :Profile
+    public AchievementProfile() //constructor
     {
-        public AchievementProfile()
-        {
-            CreateMaps();
-        }
-
-        private void CreateMaps()
-        {
-            CreateMap<Achievement, AchievementViewModel>();
-            CreateMap<AchievementDTO, Achievement>();
-
-            CreateMap<AchievementAddDTO, Achievement>();
-
-            CreateMap<AchievementUpdateDTO, Achievement>();
-        }
-
+        CreateMaps();
     }
+
+    private void CreateMaps()
+    {
+        CreateMap<Achievement, AchievementViewModel>(); //asıl modeli(Achievement), listeleme gbi işlemlerde  kullanmak için (AchievementViewModel)  dönüştürme işlemi
+        CreateMap<AchievementDTO, Achievement>(); // özel oluşturlan modeli (AchievementDTO) asıl modele dönüştürme işlemi (AchievementDTO)
+
+        CreateMap<AchievementAddDTO, Achievement>(); // ekleme işleminde kullanılan modeli (AchievementAddDTO), asıl modele dönüştürme işlemi (Achievement)
+
+        CreateMap<AchievementUpdateDTO, Achievement>();  // güncelleme işlemi için kullanılan modeli (AchievementUpdateDTO) , asıl modele dönüştürme işlemi (Achievement)
+        
+    }
+
 }

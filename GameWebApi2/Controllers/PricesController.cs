@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class PricesController : ControllerBase
 {
     private readonly IPricesRepository _pricesRepository;
@@ -16,7 +14,7 @@ public class PricesController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _pricesRepository.GetAll();
@@ -30,7 +28,7 @@ public class PricesController : ControllerBase
         return Ok(_pricesRepository.Get(x => x.id == id));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(PricesAddDTO model)
     {
         if (model == null)
@@ -42,7 +40,7 @@ public class PricesController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(PricesUpdateDTO model)
     {
         if (model == null)
@@ -54,7 +52,7 @@ public class PricesController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _pricesRepository.Delete(x => x.id == id);

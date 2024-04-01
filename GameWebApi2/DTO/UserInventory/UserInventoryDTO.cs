@@ -10,5 +10,6 @@ public class UserInventoryDTO
     public double totalKM { get; set; }
     public DateTime date { get; set; }
     public int loginUser_id { get; set; }
-    public AuthUser loginUser { get; set; }
+    //public AuthUser loginUser { get; set; }
 }
+

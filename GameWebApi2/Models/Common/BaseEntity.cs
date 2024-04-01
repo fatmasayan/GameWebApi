@@ -2,4 +2,5 @@
 
 public abstract class BaseEntity
 {
+    //bütün modelleri kapsayan bir model 
 }

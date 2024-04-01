@@ -1,47 +1,46 @@
-﻿
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class AchievementController : ControllerBase
 {
-    private readonly IAchievementRepository _achievementRepository;
-    private readonly IMapper _mapper;
+    private readonly IAchievementRepository _achievementRepository;//vertabanı işlemlerinin yapıldığı sınıftan bir nesne oluşturuldu 
+    private readonly IMapper _mapper; //mapping işlelerinde kullanılması icinbir nesne
    
     public AchievementController(IAchievementRepository achievementRepository, IMapper mapper)
     {
-        _achievementRepository = achievementRepository;
+        _achievementRepository = achievementRepository; 
         _mapper = mapper;
     }///
 
-    [HttpGet]// listeleme işlemi buruda herhangi bir mapping işlemi yapmaya gerek yok
+    [HttpGet("getList")]// listeleme işlemi 
     public IActionResult GetAll()
     {
-        var resultList = _achievementRepository.GetAll();
+        var resultList = _achievementRepository.GetAll(); //Rpository sınıfda yazılan metod kullanıldı.
 
-        return Ok(_mapper.Map<List<AchievementViewModel>>(resultList));
+        return Ok(_mapper.Map<List<AchievementViewModel>>(resultList)); //listenin id gibi görünmesini istemediğimiz özellikleri için view model oluşturuldu dönen liste view modele dönüştürüldü.
     }
 
-    // filterli listeleme oldu  (viewmodelli örnek) - Contains:içermek
-    [HttpGet("{keyword}")] //get al içinde tanımladığımız değişken için getirme işlemi yapar
-    public IActionResult GetAll(string keyword)
-    {
-        return Ok(_achievementRepository.GetAll(x => x.achievementName.Contains(keyword)));
-    }
+    ////özel listeleme Contains:içermek 
+    //[HttpGet("getKeyword/{keyword}")] //GetAll ile dönen listede istenilen sutünda istenilen şekilde özel bir liste getirmek için tanımlandı.
+    //public IActionResult GetAll(string keyword) //burda örnek olarak kelime içinde keyword olarak girilen değeri içerenleri listeleme işlemi yapıldı isteğe göre farklı özelliklerle yapılabilir
+    //{
+    //    return Ok(_achievementRepository.GetAll(x => x.achievementName.Contains(keyword)));
+    //} 
 
-    // filterlı listeleme oldu 
-    [HttpGet("getSingle/{id}")]
+    // filterlı listeleme işlemei liste içinde isenen id'li öğeyi getirmek  için 
+    [HttpGet("getSingle/{id}")] 
     public IActionResult Get(int id)
     {
         return Ok(_achievementRepository.Get(x => x.id == id)); //yazılan id'deki nesneyi getirir
     }
 
-    [HttpPost]
-    public IActionResult Add(AchievementAddDTO model) //ekle işleminde id gibi erişilmesi istemediğimiz değerler için DTO tanımlayıp sadece alınacak olan değişken değerlerini alıyoruz
+    //listeye-tabloya ekleme işlemi yapmak için kullanılan endpoint 
+    [HttpPost("add")]
+    public IActionResult Add(AchievementAddDTO model) //ekle işleminde id gibi erişilmesi-değiştirilmesi istenmeyen değerler için DTO tanımlayıp sadece alınacak olan değişken değerleri alınır.
     {
-        if (model == null)
+        if (model == null) //
             return BadRequest();
 
         var dataModel = _mapper.Map<Achievement>(model); //dto olarak gelen nesneyi Achievement sınıf nesenesine dönüştürme işlemi : mapping
@@ -51,19 +50,19 @@ public class AchievementController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
-    public IActionResult Update(AchievementUpdateDTO model) //Güncelleme işlemi model dto olarak alıyoruz id ve değiştirmemek için belirlli özellikler üzerinde 
+    [HttpPut("update")]
+    public IActionResult Update(AchievementUpdateDTO model) //Güncelleme işlemi içinde updateDTO şeklinde modeller tnaımlandı. Güncelleme işlemlerinde öğeye  id ile erişilir ona göre güncellenir 
     {                                               //değişlikler yapılarak güncelleme  yapılan        
         if (model == null)
             return BadRequest();
 
         var dataModel = _mapper.Map<Achievement>(model); // dto nesnesini Achievement sınıf nesnesine dönüştürüyoruz 
         var result = _achievementRepository.Update(dataModel); //güncelleme işlemi yapıldı
-        //Repositoryya gönderiyoruz _achievementRepository AchievementRepo dan üretilen bir nesne ve Generic repoda oluşturlan metodlara erişerek işlem yapılır
+        //Repositoryya gönderiyoruz _achievementRepository AchievementRepo dan üretilen bir nesne ve Generic yapıdaki Repositorye oluşturlan metodlara erişerek işlem yapılır
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _achievementRepository.Delete(x => x.id == id);  //id göre silme işlemi yapılır

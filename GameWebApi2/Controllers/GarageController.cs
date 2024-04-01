@@ -1,10 +1,8 @@
-﻿
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class GarageController : ControllerBase
 {
     private readonly IGarageRepository _garageRepository;
@@ -16,7 +14,7 @@ public class GarageController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _garageRepository.GetAll();
@@ -25,20 +23,20 @@ public class GarageController : ControllerBase
     }
 
     
-    [HttpGet("{keyword}")] 
-    public IActionResult GetAll(string keyword)
-    {
-        return Ok(_garageRepository.GetAll(x => x.garageName.Contains(keyword)));
-    }
+    //[HttpGet("getKeyword/{keyword}")] 
+    //public IActionResult GetAll(string keyword)
+    //{
+    //    return Ok(_garageRepository.GetAll(x => x.garageName.Contains(keyword)));
+    //}
 
     
-    [HttpGet("getSingle/{id}")]
+    [HttpGet("getSingle/{id}")] //
     public IActionResult Get(int id)
     {
         return Ok(_garageRepository.Get(x => x.id == id)); 
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(GarageAddDTO model) 
     {
         if (model == null)
@@ -50,7 +48,7 @@ public class GarageController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(GarageUpdateDTO model) 
     {                                                      
         if (model == null)
@@ -62,7 +60,7 @@ public class GarageController : ControllerBase
         return Ok(result);
     }
     
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _garageRepository.Delete(x => x.id == id);  

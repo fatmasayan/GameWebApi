@@ -1,10 +1,8 @@
-﻿
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class UserCharController : ControllerBase
 {
     private readonly IUserCharRepository _userCharRepository;
@@ -16,7 +14,7 @@ public class UserCharController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _userCharRepository.GetAll(x => x.body, x => x.foot, x => x.glove, x => x.head, x => x.loginUser, x => x.leg, x => x.loginUser);
@@ -30,7 +28,7 @@ public class UserCharController : ControllerBase
         return Ok(_userCharRepository.Get(x => x.id == id, x => x.body, x => x.foot, x => x.glove, x => x.head, x => x.loginUser, x => x.leg, x => x.loginUser));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(UserCharAddDTO model)
     {
         if (model == null)
@@ -42,7 +40,7 @@ public class UserCharController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(UserCharUpdateDTO model)
     {
         if (model == null)
@@ -54,7 +52,7 @@ public class UserCharController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _userCharRepository.Delete(x => x.id == id);

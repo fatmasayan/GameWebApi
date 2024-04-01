@@ -1,10 +1,8 @@
-﻿
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class AuthGroupController : ControllerBase
 {
     private readonly IAuthGroupRepository _authGroupRepository;
@@ -16,7 +14,7 @@ public class AuthGroupController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _authGroupRepository.GetAll();
@@ -30,7 +28,7 @@ public class AuthGroupController : ControllerBase
         return Ok(_authGroupRepository.Get(x => x.id == id));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(AuthGroupAddDTO model)
     {
         if (model == null)
@@ -42,7 +40,7 @@ public class AuthGroupController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(AuthGroupUpdateDTO model)
     {
         if (model == null)
@@ -54,7 +52,7 @@ public class AuthGroupController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _authGroupRepository.Delete(x => x.id == id);

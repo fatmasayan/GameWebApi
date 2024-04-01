@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -16,7 +14,7 @@ public class BikePartsController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _bikePartsRepository.GetAll();
@@ -30,7 +28,7 @@ public class BikePartsController : ControllerBase
         return Ok(_bikePartsRepository.Get(x => x.id == id));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(BikePartsAddDTO model)
     {
         if (model == null)
@@ -42,7 +40,7 @@ public class BikePartsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(BikePartsUpdateDTO model)
     {
         if (model == null)
@@ -54,7 +52,7 @@ public class BikePartsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _bikePartsRepository.Delete(x => x.id == id);

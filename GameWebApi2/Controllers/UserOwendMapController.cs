@@ -2,7 +2,7 @@
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class UserOwendMapController : ControllerBase
 {
     private readonly IUserOwendMapRepository _userOwendMapRepository;
@@ -14,7 +14,7 @@ public class UserOwendMapController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _userOwendMapRepository.GetAll(x => x.loginUser, x => x.map);
@@ -28,7 +28,7 @@ public class UserOwendMapController : ControllerBase
         return Ok(_userOwendMapRepository.Get(x => x.id == id, x => x.loginUser, x => x.map));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add( UserOwendMapAddDTO model)
     {
         if (model == null)
@@ -40,7 +40,7 @@ public class UserOwendMapController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update( UserOwendMapUpdateDTO model)
     {
         if (model == null)
@@ -52,7 +52,7 @@ public class UserOwendMapController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _userOwendMapRepository.Delete(x => x.id == id);

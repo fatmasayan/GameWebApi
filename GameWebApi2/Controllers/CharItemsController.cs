@@ -2,7 +2,7 @@
 
 [Route("api/[controller]")]
 [ApiController]
-//[BasicAuthorization]
+[Authorize]
 public class CharItemsController : ControllerBase
 {
     private readonly ICharItemsRepository _charItemsRepository;
@@ -14,7 +14,7 @@ public class CharItemsController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
+    [HttpGet("getList")]
     public IActionResult GetAll()
     {
         var resultList = _charItemsRepository.GetAll();
@@ -28,7 +28,7 @@ public class CharItemsController : ControllerBase
         return Ok(_charItemsRepository.Get(x => x.id == id));
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public IActionResult Add(CharItemsAddDTO model)
     {
         if (model == null)
@@ -40,7 +40,7 @@ public class CharItemsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     public IActionResult Update(CharItemsUpdateDTO model)
     {
         if (model == null)
@@ -52,7 +52,7 @@ public class CharItemsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
         var result = _charItemsRepository.Delete(x => x.id == id);

@@ -1,5 +1,4 @@
-﻿
-namespace GameWebApi2.Mapping;
+﻿namespace GameWebApi2.Mapping;
 
 public class AuthUserAndUserPermissionsProfile :Profile
 {

@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace GameWebApi2.Controllers;
+﻿namespace GameWebApi2.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+//[Authorize]
 public class LoginController : ControllerBase
 {
     private readonly IAuthService authService;
@@ -21,4 +20,8 @@ public class LoginController : ControllerBase
         var result = await authService.LoginUserAsync(request);
         return result;
     }
+
+    
+
+
 }

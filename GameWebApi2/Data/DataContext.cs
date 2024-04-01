@@ -2,14 +2,12 @@
 
 public class DataContext :DbContext 
 {
-    //public DataContext(DbContext<DataContext> options) :base { }
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
         
-    } //değiştirme
-    //tablo getirme
-    //public DbSet<api_achievement> Achievements { get; set; }
-    //Bu özellik, api_achievement türünden nesneleri temsil eden bir DbSet'i belirtir. Bu, Achievements adı altında bir veritabanı tablosuna erişimi sağlar.
+    } 
+    
+    //(11-37 kodlar )Bu özellik, api_x türünden nesneleri temsil eden bir DbSet'i belirtir. Bu, X adı altında bir veritabanı tablosuna erişimi sağlar.
     public DbSet<Achievement> api_achievement { get; set; }
     public DbSet<BikeParts> api_bikeparts { get; set; }
     public DbSet<CharItems> api_charitems { get; set; }
@@ -36,6 +34,7 @@ public class DataContext :DbContext
     public DbSet<DjangoContentType> django_content_type { get; set; }
     public DbSet<DjangoMigrations> django_migrations { get; set; }
     public DbSet<DjangoSession> django_session { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
