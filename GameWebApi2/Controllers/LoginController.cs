@@ -2,7 +2,6 @@
 
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize]
 public class LoginController : ControllerBase
 {
     private readonly IAuthService authService;
@@ -18,10 +17,7 @@ public class LoginController : ControllerBase
     public async Task<ActionResult<UserLoginResponse>> LoginUserAsync([FromBody] UserLoginRequest request)
     {
         var result = await authService.LoginUserAsync(request);
-        return result;
+        return Ok(result);
     }
-
-    
-
 
 }
