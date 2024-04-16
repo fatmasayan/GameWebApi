@@ -6,4 +6,5 @@ public class AchievementAddDTO
     public string goalName { get; set; }
     public DateTime changeDate { get; set; }
 }
-//model üzüerinde direkt işlem yapılmaması ve gerek durumlara özel modeller oluşturabilmek adına ekleme güncelleme ve silme için modeller oluşturulur.
+// model üzerinde direkt işlem yapılmaması ve gereken durumlara özel modeller oluşturabilmek için, ekleme ,güncelleme ve silme için modeller oluşturulur.
+// Models are created for additions, updates and deletions in order not to perform direct operations on the model and to create custom models when necessary.

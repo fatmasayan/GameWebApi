@@ -16,8 +16,8 @@ public class LoginTest : BaseTestFactory
     {
         var response = await _client.PostAsync(url, new StringContent(@"
 {
-    ""username"":""user4"",
-    ""password"":""4""
+    ""username"":""user9"",
+    ""password"":""9""
 }
 ",Encoding.UTF8,"application/json"));
 
@@ -25,6 +25,8 @@ public class LoginTest : BaseTestFactory
         response.EnsureSuccessStatusCode();
         //var result = await response.Content.ReadAsStringAsync(); // bu satırı test amaçlı koymuştum sonucu görmek için yani. 
         Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString()); // sonucun tipine bakarak başarılı olup olmadığı kontrol edilir başarılı ise OK
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode); // sonucun Status Koduna bakılır ve sonuç 200 dönmüşse OK
+        // 2 tane Assert eklendiği için ikisini de sağlayınca test başarılı oluyor.
     }
 
     [Theory]

@@ -22,13 +22,6 @@ public class AchievementController : ControllerBase
         return Ok(_mapper.Map<List<AchievementViewModel>>(resultList)); //listenin id gibi görünmesini istemediğimiz özellikleri için view model oluşturuldu dönen liste view modele dönüştürüldü.
     }
 
-    ////özel listeleme Contains:içermek 
-    //[HttpGet("getKeyword/{keyword}")] //GetAll ile dönen listede istenilen sutünda istenilen şekilde özel bir liste getirmek için tanımlandı.
-    //public IActionResult GetAll(string keyword) //burda örnek olarak kelime içinde keyword olarak girilen değeri içerenleri listeleme işlemi yapıldı isteğe göre farklı özelliklerle yapılabilir
-    //{
-    //    return Ok(_achievementRepository.GetAll(x => x.achievementName.Contains(keyword)));
-    //} 
-
     // filterlı listeleme işlemei liste içinde isenen id'li öğeyi getirmek  için 
     [HttpGet("getSingle/{id}")] 
     public IActionResult Get(int id)

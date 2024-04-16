@@ -8,6 +8,7 @@ public class UserBikesController : ControllerBase
     private readonly IUserBikesRepository _userBikesRepository;
     private readonly IMapper _mapper;
 
+
     public UserBikesController(IUserBikesRepository userBikesRepository, IMapper mapper)
     {
         _userBikesRepository = userBikesRepository;
@@ -19,6 +20,7 @@ public class UserBikesController : ControllerBase
     {
         var resultList = _userBikesRepository.GetAll(x => x.body, x => x.saddle, x => x.handlebar, x => x.indicator, x => x.loginUser, x => x.wheel);
         // modele ilişkili verileri dahil etmiş oldum , yani başka tablodan aldığı değerleri getirmiş ve o değere atadık 
+
         return Ok(_mapper.Map<List<UserBikesViewModel>>(resultList));
     }
 

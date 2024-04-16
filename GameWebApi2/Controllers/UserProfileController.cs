@@ -23,14 +23,6 @@ public class UserProfileController : ControllerBase
         return Ok(_mapper.Map<List<UserProfileViewModel>>(resultList));
     }
 
-    
-    //[HttpGet("getKeyword/{keyword}")] 
-    //public IActionResult GetAll(string keyword)
-    //{
-    //    return Ok(_userProfileRepository.GetAll(x => x.nickName.Contains(keyword), includes: x => x.user));
-    //}
-
-    
     [HttpGet("getSingle/{id}")]
     public IActionResult Get(int id)
     {

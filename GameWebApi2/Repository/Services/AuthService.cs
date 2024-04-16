@@ -19,36 +19,6 @@ public class AuthService : IAuthService
     }
 
 
-    //public async Task<UserLoginResponse> LoginUserAsync(UserLoginRequest request)
-    //{
-    //    UserLoginResponse response = new();
-
-
-    //    if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
-    //    {
-    //        throw new ArgumentNullException(nameof(request));
-    //    }
-
-    //    var user = authUserRepository.Get(x => x.username == request.Username && x.password == request.Password);
-
-    //    if (user != null)
-    //    {
-    //        var generatedTokenInformation = await tokenService.GenerateToken(new GenerateTokenRequest { Username = request.Username });
-
-    //        response.AuthenticateResult = true;
-    //        response.AuthToken = generatedTokenInformation.Token;
-    //        response.AccessTokenExpireDate = generatedTokenInformation.TokenExpireDate;
-
-    //        authtokenTokenRepository.Add(new AuthtokenToken
-    //        {
-    //            user_id = user.id,
-    //            key = response.AuthToken,
-    //            created = DateTime.Now
-    //        });
-    //    }
-
-    //    return response;
-    //}
     public async Task<UserLoginResponse> LoginUserAsync(UserLoginRequest request)
     {
         UserLoginResponse response = new();
@@ -79,32 +49,6 @@ public class AuthService : IAuthService
 
         return response;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

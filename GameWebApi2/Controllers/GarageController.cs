@@ -23,13 +23,6 @@ public class GarageController : ControllerBase
     }
 
     
-    //[HttpGet("getKeyword/{keyword}")] 
-    //public IActionResult GetAll(string keyword)
-    //{
-    //    return Ok(_garageRepository.GetAll(x => x.garageName.Contains(keyword)));
-    //}
-
-    
     [HttpGet("getSingle/{id}")] //
     public IActionResult Get(int id)
     {

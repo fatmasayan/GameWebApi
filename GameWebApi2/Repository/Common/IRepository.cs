@@ -4,15 +4,15 @@ public interface IRepository<TModel> where TModel : BaseEntity //TModel IEntity 
 {
     DbSet<TModel> Table { get; } // db tablosu
 
-    // Command Operations (CRUD/ Ekleme, Silme, Güncelleme)
+    // Command Operations (CRUD/Create, Remove, Update, Delete)
     bool Add(TModel model);
     bool Update(TModel model);
-    bool Delete(Expression<Func<TModel, bool>> filter); //burda id alınır ve kontrol edildiği için parametre olarak bu yazılır
+    bool Delete(Expression<Func<TModel, bool>> filter); // here id is taken and this is written as a parameter because it is checked
 
     // Query Operations
-    List<TModel> GetAll(params Expression<Func<TModel, object>>[] includes); //tüm  
-    List<TModel> GetAll(Expression<Func<TModel, bool>> filter, params Expression<Func<TModel, object>>[] includes); // özel tüm listeleme
+    List<TModel> GetAll(params Expression<Func<TModel, object>>[] includes); //all
+    List<TModel> GetAll(Expression<Func<TModel, bool>> filter, params Expression<Func<TModel, object>>[] includes); // custom all listing
     TModel Get(Expression<Func<TModel, bool>> filter, params Expression<Func<TModel, object>>[] includes);
-    //aranan kriterde tek bir model/nesne dönecektir
-    //Expression<Func<TModel, object>>? include = nul bu kısım model içinde model cagırılma oldugu için inculdem mantığı join olarka işler
+    // will return a single model/object with the searched criteria.
+    // (Expression<Func<TModel, object>>? include = null ) since this part is a model call within a model, the include logic works as a join
 }

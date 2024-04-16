@@ -13,6 +13,3 @@ global using Microsoft.IdentityModel.Tokens;
 global using System.ComponentModel.DataAnnotations;
 global using System.Linq.Expressions;
 global using System.Text;
-
-
-//kütüphanelerin bütün programda tnaımlı olması için

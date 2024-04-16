@@ -5,9 +5,10 @@ public class DataContext :DbContext
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
         
-    } 
-    
+    }
+
     //(11-37 kodlar )Bu özellik, api_x türünden nesneleri temsil eden bir DbSet'i belirtir. Bu, X adı altında bir veritabanı tablosuna erişimi sağlar.
+    //(11-37 codes )This property specifies a DbSet representing objects of type api_x. This allows access to a database table under the name X.
     public DbSet<Achievement> api_achievement { get; set; }
     public DbSet<BikeParts> api_bikeparts { get; set; }
     public DbSet<CharItems> api_charitems { get; set; }
@@ -40,19 +41,6 @@ public class DataContext :DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<UserBodyType>()
-        .HasOne(u => u.loginUser)
-        .WithMany()
-        .HasForeignKey(u => u.loginUser_id)
-        .HasPrincipalKey(u => u.id);
-
-    //-----------------------------------------------
-
-        modelBuilder.Entity<AuthUserGroups>()
-        .HasOne(u => u.group)
-        .WithMany()
-        .HasForeignKey(u => u.group_id)
-        .HasPrincipalKey(u => u.id);
 
         modelBuilder.Entity<AuthUserGroups>() // AuthUserGroups modelinin tablosuna git
         .HasOne(u => u.user) // tablonun user tablosu ile 1'e
@@ -60,8 +48,24 @@ public class DataContext :DbContext
         .HasForeignKey(u => u.user_id) // bu bağlantı user_id sütunu ile bağlanmıştır
         .HasPrincipalKey(u => u.id); // AuthUser tablosun id'si ile eşleştir
 
-        //--------------------------------------------------
+        //-----------------------------------------------
 
+        modelBuilder.Entity<UserBodyType>() // Go to the table of the UserBodyType model
+        .HasOne(u => u.loginUser) // table with user table to 1
+        .WithMany() // n in the relationship
+        .HasForeignKey(u => u.loginUser_id) // this connection is linked with the loginUser_id column
+        .HasPrincipalKey(u => u.id);// Match the id of the AuthUser table
+
+        //-----------------------------------------------
+
+        modelBuilder.Entity<AuthUserGroups>()
+        .HasOne(u => u.group)
+        .WithMany()
+        .HasForeignKey(u => u.group_id)
+        .HasPrincipalKey(u => u.id);
+
+        //---------------------------------
+      
         modelBuilder.Entity<UserProfile>()
         .HasOne(u => u.user)
         .WithMany()

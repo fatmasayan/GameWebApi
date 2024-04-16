@@ -6,4 +6,5 @@ public class AchievementUpdateDTO
     public string achievementName { get; set; }
     public string goalName { get; set; }
     public DateTime changeDate { get; set; }
+    
 }

@@ -21,15 +21,7 @@ public class AuthUserController : ControllerBase
 
         return Ok(_mapper.Map<List<AuthUserViewModel>>(resultList));
     }
-
-    
-    //[HttpGet("getKeyword/{keyword}")] 
-    //public IActionResult GetAll(string keyword)
-    //{
-    //    return Ok(_authUserRepository.GetAll(x => x.username.Contains(keyword)));
-    //}
-
-    // filterlı listeleme oldu 
+ 
     [HttpGet("getSingle/{id}")]
     public IActionResult Get(int id)
     {
@@ -63,7 +55,7 @@ public class AuthUserController : ControllerBase
     [HttpDelete("delete/{id}")]
     public IActionResult Delete(int id)
     {
-        var result = _authUserRepository.Delete(x => x.id == id);  //id göre silme işlemi yapılır
+        var result = _authUserRepository.Delete(x => x.id == id); 
 
         return Ok(result);
     }
