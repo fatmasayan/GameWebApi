@@ -4,15 +4,15 @@ using System.Text;
 
 namespace GameWebApi.Test;
 
-public class UserProfileTest : BaseTestFactory
+public class DjangoSessionTest : BaseTestFactory
 {
-    public UserProfileTest(WebApplicationFactory<Program> factory) : base(factory)
+    public DjangoSessionTest(WebApplicationFactory<Program> factory) : base(factory)
     {
     }
 
 
     [Theory]
-    [InlineData("/api/UserBikes/getList")] //listeleme işlemi başarılı sonuçlanırsa
+    [InlineData("/api/DjangoSession/getList")] //listeleme işlemi başarılı sonuçlanırsa
     public async Task GetAll_EndpointsReturnSuccess(string url)
     {
         _client.DefaultRequestHeaders.Add("Authorization", _token);
@@ -27,7 +27,7 @@ public class UserProfileTest : BaseTestFactory
     }
 
     [Theory] //listeleme testi başarısız sonuçlanırsa
-    [InlineData("/api/UserBikes/getList")]
+    [InlineData("/api/DjangoSession/getList")]
     public async Task GetAll_EndpointsReturnFaild(string url)
     {
         var response = await _client.GetAsync(url);
@@ -37,52 +37,17 @@ public class UserProfileTest : BaseTestFactory
     }
 
 
-
     [Theory]
-    [InlineData("/api/UserBikes/getSingle")] //get single başarılı sonuçlanırsa
-    public async Task Get_EndpointsReturnSuccess(string url)
-    {
-        _client.DefaultRequestHeaders.Add("Authorization", _token);
-        var response = await _client.GetAsync(url + "/3");
-
-
-        response.EnsureSuccessStatusCode();
-
-        Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
-    }
-
-    [Theory]
-    [InlineData("/api/UserBikes/getSingle")] // getsingle başarısız sonuçlanırsa
-    public async Task Get_EndpointsReturnFaild(string url)
-    {
-        var response = await _client.GetAsync(url);
-
-
-        Assert.NotEqual(HttpStatusCode.OK, response.StatusCode);
-
-    }
-
-    [Theory]
-    [InlineData("/api/UserBikes/add")] //ekleme işlemi başarılı sonuçlanırsa
+    [InlineData("/api/DjangoSession/add")] //ekleme işlemi başarılı sonuçlanırsa
     public async Task Add_EndpointsReturnSuccess(string url)
 
     {
         _client.DefaultRequestHeaders.Add("Authorization", _token);
         var response = await _client.PostAsync(url, new StringContent(@"
 {
-  ""nickName"": ""test_ekleme"",
-  ""sex"": 0,
-  ""birthDate"": ""2024-03-11T11:07:44.439Z"",
-  ""weight"": 10,
-  ""height"": 10,
-  ""bodyType"": 10,
-  ""country"": ""string"",
-  ""city"": ""string"",
-  ""address"": ""string"",
-  ""changeDate"": ""2024-03-11T11:07:44.439Z"",
-  ""user_id"": 14
+  ""session_key"": ""test"",
+  ""session_data"": ""ekleme"",
+  ""expire_date"": ""2024-03-11T10:51:40.188Z""
 }
 ", Encoding.UTF8, "application/json"));
 
@@ -94,7 +59,7 @@ public class UserProfileTest : BaseTestFactory
     }
 
     [Theory]
-    [InlineData("/api/UserBikes/add")] //ekleme işlemi başarısız sonuçlanırsa
+    [InlineData("/api/DjangoSession/add")] //ekleme işlemi başarısız sonuçlanırsa
     public async Task Add_EndpointsReturnFaild(string url)
     {
         var response = await _client.PostAsync(url, new StringContent(@"", Encoding.UTF8, "application/json"));
@@ -105,24 +70,15 @@ public class UserProfileTest : BaseTestFactory
 
 
     [Theory]
-    [InlineData("/api/UserBikes/update")] //update başarılı sonuçlanırsa
+    [InlineData("/api/DjangoSession/update")] //update başarılı sonuçlanırsa
     public async Task Update_EndpointsReturnSuccess(string url)
     {
         _client.DefaultRequestHeaders.Add("Authorization", _token);
         var response = await _client.PutAsync(url, new StringContent(@"
 {
-  ""id"": 10,
-  ""nickName"": ""test_güncelleme"",
-  ""sex"": 0,
-  ""birthDate"": ""2024-03-11T11:07:44.439Z"",
-  ""weight"": 10,
-  ""height"": 10,
-  ""bodyType"": 10,
-  ""country"": ""string"",
-  ""city"": ""string"",
-  ""address"": ""string"",
-  ""changeDate"": ""2024-03-11T11:07:44.439Z"",
-  ""user_id"": 13
+  ""session_key"": ""4f7p3sny7p73aieoujmrvuovv9qdj9fg"",
+  ""session_data"": ""güncelleme"",
+  ""expire_date"": ""2024-03-11T10:51:40.188Z""
 }
 ", Encoding.UTF8, "application/json"));
 
@@ -135,7 +91,7 @@ public class UserProfileTest : BaseTestFactory
     }
 
     [Theory]
-    [InlineData("/api/UserBikes/update")]
+    [InlineData("/api/DjangoSession/update")]
     public async Task Update_EndpointsReturnFaild(string url) //update başarısız sonuçlanırsa 
     {
         var response = await _client.PutAsync(url, new StringContent(@"", Encoding.UTF8, "application/json"));
@@ -145,11 +101,11 @@ public class UserProfileTest : BaseTestFactory
     }
 
     [Theory]
-    [InlineData("/api/UserBikes/delete")] //delete başarılı sonuçlanırsa
+    [InlineData("/api/DjangoSession/delete")] //delete başarılı sonuçlanırsa
     public async Task Delete_EndpointsReturnSuccess(string url)
     {
         _client.DefaultRequestHeaders.Add("Authorization", _token);
-        var response = await _client.DeleteAsync(url + "/12");
+        var response = await _client.DeleteAsync(url + "/add");
 
 
         response.EnsureSuccessStatusCode();
@@ -159,7 +115,7 @@ public class UserProfileTest : BaseTestFactory
     }
 
     [Theory]
-    [InlineData("/api/UserBikes/delete")] //delete başarısız sonuçlanırsa
+    [InlineData("/api/DjangoSession/delete")] //delete başarısız sonuçlanırsa
     public async Task Delete_EndpointsReturnFaild(string url)
     {
         var response = await _client.DeleteAsync(url);

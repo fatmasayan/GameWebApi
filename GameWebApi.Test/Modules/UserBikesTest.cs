@@ -4,12 +4,11 @@ using System.Text;
 
 namespace GameWebApi.Test;
 
-public class UserProfileTest : BaseTestFactory
+public class UserBikesTest : BaseTestFactory
 {
-    public UserProfileTest(WebApplicationFactory<Program> factory) : base(factory)
+    public UserBikesTest(WebApplicationFactory<Program> factory) : base(factory)
     {
     }
-
 
     [Theory]
     [InlineData("/api/UserBikes/getList")] //listeleme işlemi başarılı sonuçlanırsa
@@ -18,11 +17,11 @@ public class UserProfileTest : BaseTestFactory
         _client.DefaultRequestHeaders.Add("Authorization", _token);
         var response = await _client.GetAsync(url);
 
-
+        
         response.EnsureSuccessStatusCode();
 
-        Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString()); 
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode); 
 
     }
 
@@ -32,7 +31,7 @@ public class UserProfileTest : BaseTestFactory
     {
         var response = await _client.GetAsync(url);
 
-
+        
         Assert.NotEqual(HttpStatusCode.OK, response.StatusCode);
     }
 
@@ -45,7 +44,7 @@ public class UserProfileTest : BaseTestFactory
         _client.DefaultRequestHeaders.Add("Authorization", _token);
         var response = await _client.GetAsync(url + "/3");
 
-
+        
         response.EnsureSuccessStatusCode();
 
         Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
@@ -59,8 +58,8 @@ public class UserProfileTest : BaseTestFactory
     {
         var response = await _client.GetAsync(url);
 
-
-        Assert.NotEqual(HttpStatusCode.OK, response.StatusCode);
+         
+        Assert.NotEqual(HttpStatusCode.OK, response.StatusCode); 
 
     }
 
@@ -72,23 +71,19 @@ public class UserProfileTest : BaseTestFactory
         _client.DefaultRequestHeaders.Add("Authorization", _token);
         var response = await _client.PostAsync(url, new StringContent(@"
 {
-  ""nickName"": ""test_ekleme"",
-  ""sex"": 0,
-  ""birthDate"": ""2024-03-11T11:07:44.439Z"",
-  ""weight"": 10,
-  ""height"": 10,
-  ""bodyType"": 10,
-  ""country"": ""string"",
-  ""city"": ""string"",
-  ""address"": ""string"",
-  ""changeDate"": ""2024-03-11T11:07:44.439Z"",
-  ""user_id"": 14
+    ""isActive"": false,
+    ""body_id"": 1,
+    ""handlebar_id"": 2,
+    ""indicator_id"": 5,
+    ""loginUser_id"": 2,
+    ""saddle_id"": 3,
+    ""wheel_id"": 4
 }
 ", Encoding.UTF8, "application/json"));
 
 
         response.EnsureSuccessStatusCode();
-
+        
         Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
@@ -111,22 +106,18 @@ public class UserProfileTest : BaseTestFactory
         _client.DefaultRequestHeaders.Add("Authorization", _token);
         var response = await _client.PutAsync(url, new StringContent(@"
 {
-  ""id"": 10,
-  ""nickName"": ""test_güncelleme"",
-  ""sex"": 0,
-  ""birthDate"": ""2024-03-11T11:07:44.439Z"",
-  ""weight"": 10,
-  ""height"": 10,
-  ""bodyType"": 10,
-  ""country"": ""string"",
-  ""city"": ""string"",
-  ""address"": ""string"",
-  ""changeDate"": ""2024-03-11T11:07:44.439Z"",
-  ""user_id"": 13
+    ""id"": 19,
+    ""isActive"": false,
+    ""body_id"": 1,
+    ""handlebar_id"": 2,
+    ""indicator_id"": 5,
+    ""loginUser_id"": 2,
+    ""saddle_id"": 3,
+    ""wheel_id"": 4
 }
 ", Encoding.UTF8, "application/json"));
 
-
+        
         response.EnsureSuccessStatusCode();
 
         Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
@@ -149,9 +140,9 @@ public class UserProfileTest : BaseTestFactory
     public async Task Delete_EndpointsReturnSuccess(string url)
     {
         _client.DefaultRequestHeaders.Add("Authorization", _token);
-        var response = await _client.DeleteAsync(url + "/12");
+        var response = await _client.DeleteAsync(url + "/21");
 
-
+        
         response.EnsureSuccessStatusCode();
 
         Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
@@ -164,6 +155,6 @@ public class UserProfileTest : BaseTestFactory
     {
         var response = await _client.DeleteAsync(url);
 
-        Assert.NotEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotEqual(HttpStatusCode.OK, response.StatusCode); 
     }
 }

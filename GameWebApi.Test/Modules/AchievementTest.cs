@@ -4,15 +4,15 @@ using System.Text;
 
 namespace GameWebApi.Test;
 
-public class UserProfileTest : BaseTestFactory
+public class AchievementTest : BaseTestFactory
 {
-    public UserProfileTest(WebApplicationFactory<Program> factory) : base(factory)
+    public AchievementTest(WebApplicationFactory<Program> factory) : base(factory)
     {
     }
 
 
     [Theory]
-    [InlineData("/api/UserBikes/getList")] //listeleme işlemi başarılı sonuçlanırsa
+    [InlineData("/api/Achievement/getList")] //listeleme işlemi başarılı sonuçlanırsa
     public async Task GetAll_EndpointsReturnSuccess(string url)
     {
         _client.DefaultRequestHeaders.Add("Authorization", _token);
@@ -27,7 +27,7 @@ public class UserProfileTest : BaseTestFactory
     }
 
     [Theory] //listeleme testi başarısız sonuçlanırsa
-    [InlineData("/api/UserBikes/getList")]
+    [InlineData("/api/Achievement/getList")]
     public async Task GetAll_EndpointsReturnFaild(string url)
     {
         var response = await _client.GetAsync(url);
@@ -39,11 +39,11 @@ public class UserProfileTest : BaseTestFactory
 
 
     [Theory]
-    [InlineData("/api/UserBikes/getSingle")] //get single başarılı sonuçlanırsa
+    [InlineData("/api/Achievement/getSingle")] //get single başarılı sonuçlanırsa
     public async Task Get_EndpointsReturnSuccess(string url)
     {
         _client.DefaultRequestHeaders.Add("Authorization", _token);
-        var response = await _client.GetAsync(url + "/3");
+        var response = await _client.GetAsync(url + "/2");
 
 
         response.EnsureSuccessStatusCode();
@@ -54,7 +54,7 @@ public class UserProfileTest : BaseTestFactory
     }
 
     [Theory]
-    [InlineData("/api/UserBikes/getSingle")] // getsingle başarısız sonuçlanırsa
+    [InlineData("/api/Achievement/getSingle")] // getsingle başarısız sonuçlanırsa
     public async Task Get_EndpointsReturnFaild(string url)
     {
         var response = await _client.GetAsync(url);
@@ -65,25 +65,18 @@ public class UserProfileTest : BaseTestFactory
     }
 
     [Theory]
-    [InlineData("/api/UserBikes/add")] //ekleme işlemi başarılı sonuçlanırsa
+    [InlineData("/api/Achievement/add")] //ekleme işlemi başarılı sonuçlanırsa
     public async Task Add_EndpointsReturnSuccess(string url)
 
     {
         _client.DefaultRequestHeaders.Add("Authorization", _token);
         var response = await _client.PostAsync(url, new StringContent(@"
 {
-  ""nickName"": ""test_ekleme"",
-  ""sex"": 0,
-  ""birthDate"": ""2024-03-11T11:07:44.439Z"",
-  ""weight"": 10,
-  ""height"": 10,
-  ""bodyType"": 10,
-  ""country"": ""string"",
-  ""city"": ""string"",
-  ""address"": ""string"",
-  ""changeDate"": ""2024-03-11T11:07:44.439Z"",
-  ""user_id"": 14
+  ""achievementName"": ""test_ile_eklendi"",
+  ""goalName"": ""test_ile"",
+  ""changeDate"": ""2024-03-11T10:31:56.771Z""
 }
+
 ", Encoding.UTF8, "application/json"));
 
 
@@ -94,7 +87,7 @@ public class UserProfileTest : BaseTestFactory
     }
 
     [Theory]
-    [InlineData("/api/UserBikes/add")] //ekleme işlemi başarısız sonuçlanırsa
+    [InlineData("/api/Achievement/add")] //ekleme işlemi başarısız sonuçlanırsa
     public async Task Add_EndpointsReturnFaild(string url)
     {
         var response = await _client.PostAsync(url, new StringContent(@"", Encoding.UTF8, "application/json"));
@@ -105,25 +98,18 @@ public class UserProfileTest : BaseTestFactory
 
 
     [Theory]
-    [InlineData("/api/UserBikes/update")] //update başarılı sonuçlanırsa
+    [InlineData("/api/Achievement/update")] //update başarılı sonuçlanırsa
     public async Task Update_EndpointsReturnSuccess(string url)
     {
         _client.DefaultRequestHeaders.Add("Authorization", _token);
         var response = await _client.PutAsync(url, new StringContent(@"
 {
-  ""id"": 10,
-  ""nickName"": ""test_güncelleme"",
-  ""sex"": 0,
-  ""birthDate"": ""2024-03-11T11:07:44.439Z"",
-  ""weight"": 10,
-  ""height"": 10,
-  ""bodyType"": 10,
-  ""country"": ""string"",
-  ""city"": ""string"",
-  ""address"": ""string"",
-  ""changeDate"": ""2024-03-11T11:07:44.439Z"",
-  ""user_id"": 13
+  ""id"": 4,
+  ""achievementName"": ""test_ile_güncellendi"",
+  ""goalName"": ""g44"",
+  ""changeDate"": ""2024-03-11T10:32:13.316Z""
 }
+
 ", Encoding.UTF8, "application/json"));
 
 
@@ -135,7 +121,7 @@ public class UserProfileTest : BaseTestFactory
     }
 
     [Theory]
-    [InlineData("/api/UserBikes/update")]
+    [InlineData("/api/Achievement/update")]
     public async Task Update_EndpointsReturnFaild(string url) //update başarısız sonuçlanırsa 
     {
         var response = await _client.PutAsync(url, new StringContent(@"", Encoding.UTF8, "application/json"));
@@ -145,7 +131,7 @@ public class UserProfileTest : BaseTestFactory
     }
 
     [Theory]
-    [InlineData("/api/UserBikes/delete")] //delete başarılı sonuçlanırsa
+    [InlineData("/api/Achievement/delete")] //delete başarılı sonuçlanırsa
     public async Task Delete_EndpointsReturnSuccess(string url)
     {
         _client.DefaultRequestHeaders.Add("Authorization", _token);
@@ -159,7 +145,7 @@ public class UserProfileTest : BaseTestFactory
     }
 
     [Theory]
-    [InlineData("/api/UserBikes/delete")] //delete başarısız sonuçlanırsa
+    [InlineData("/api/Achievement/delete")] //delete başarısız sonuçlanırsa
     public async Task Delete_EndpointsReturnFaild(string url)
     {
         var response = await _client.DeleteAsync(url);

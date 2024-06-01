@@ -17,7 +17,7 @@ public class UserOwnedAchievementController : ControllerBase
     [HttpGet("getList")]
     public IActionResult GetAll()
     {
-        var resultList = _userOwnedAchievementRepository.GetAll( x => x.achievement_id, x => x.loginUser_id);
+        var resultList = _userOwnedAchievementRepository.GetAll( x => x.achievement, x => x.loginUser);
 
         return Ok(_mapper.Map<List<UserOwnedAchievementViewModel>>(resultList));
     }
@@ -28,7 +28,8 @@ public class UserOwnedAchievementController : ControllerBase
     [HttpGet("getSingle/{id}")]
     public IActionResult Get(int id)
     {
-        return Ok(_userOwnedAchievementRepository.Get(x => x.id == id, x => x.achievement_id, x => x.loginUser_id));
+        var result = _userOwnedAchievementRepository.Get(x => x.id == id, y => y.achievement, z => z.loginUser);
+        return Ok(_mapper.Map<UserOwnedAchievementViewModel>(result));
     }
 
     [HttpPost("add")]
